@@ -4,3 +4,4 @@ corbslam_client/lib/
 corbslam_client/Thirdparty/DBoW2/lib/
 corbslam_client/Thirdparty/g2o/lib/
 corbslam_server/corbslam_server
+.vscode/
