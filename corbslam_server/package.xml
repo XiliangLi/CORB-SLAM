@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>corbslam_server</name>
+  <version>0.0.0</version>
+  <description>The corbslam_server package</description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag --> 
+  <!-- Example:  -->
+  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
+  <maintainer email="lifu@todo.todo">lifu</maintainer>
+
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>catkin_simple</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>corbslam_client</depend>
+  <depend>pcl_ros</depend>
+  <depend>eigen_catkin</depend>
+  <depend>opencv2_catkin</depend>
+  <depend>corbslam_msgs</depend>
+  <depend>dbow2_catkin</depend>
+  <depend>g2o_catkin</depend>
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

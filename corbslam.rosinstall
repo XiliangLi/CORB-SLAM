@@ -1,0 +1,33 @@
+- git:
+    local-name: catkin_simple
+    uri: git@github.com:catkin/catkin_simple.git
+
+- git:
+    local-name: pcl_catkin
+    uri: git@github.com:ethz-asl/pcl_catkin.git
+    version: 24b2c8b2b3e1fea07bcf489cab8da4776e0b0f56
+
+- git:
+    local-name: opencv2_catkin
+    uri: git@github.com:LXYYY/opencv2_catkin.git
+    
+
+- git:
+    local-name: vision_opencv
+    uri: git@github.com:LXYYY/vision_opencv.git
+    version: indigo
+
+- git:
+    local-name: eigen_catkin
+    uri: git@github.com:ethz-asl/eigen_catkin.git
+
+- git:
+    local-name: dbow2_catkin
+    uri: git@github.com:LXYYY/dbow2_catkin.git
+    version: 05572017134360ffda775ec8f410b7f9c2cfd94c
+
+- git:
+    local-name: g2o_catkin
+    uri: git@github.com:LXYYY/g2o_catkin.git
+
+

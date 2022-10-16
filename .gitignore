@@ -1,0 +1,6 @@
+# Specify filepatterns you want git to ignore.
+ORBvoc.txt
+corbslam_client/lib/
+corbslam_client/Thirdparty/DBoW2/lib/
+corbslam_client/Thirdparty/g2o/lib/
+corbslam_server/corbslam_server
