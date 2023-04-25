@@ -52,7 +52,7 @@ class TfPublisher {
               int client_id)
       : nh_(nh), nh_private_(nh_private), current_time_(ros::Time::now()) {
     tf_timer_ =
-        nh_.createTimer(ros::Duration(0.01),
+        nh_.createTimer(ros::Duration(0.001),
                         &TfPublisher::PublishPositionAsTransformCallback, this);
     odom_pub_ = nh_.advertise<nav_msgs::Odometry>("odometry", 10, true);
     nh_private_.param<std::string>(

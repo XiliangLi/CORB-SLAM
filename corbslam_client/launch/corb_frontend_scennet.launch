@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="use_sim_time" value="true"/>
+  <arg name="sensor" default="scenenn"/>
+  <arg name="play_bag" default="true"/>
+  <arg name="use_tf_gt" default="false"/>
+
+  <!-- <arg if="$(eval sensor == 'xtion')" name="rgb_topic" default="/camera/rgb/image_rect_color"/>
+  <arg if="$(eval sensor == 'xtion')" name="depth_topic" default="/camera/depth_registered/sw_registered/image_rect"/> -->
+
+  <!-- <node if="$(eval sensor == 'kinect')" pkg="image_transport" type="republish" name="republish_color" args="compressed in:=/kinect2/qhd/image_color_rect raw out:=/kinect2/qhd/image_color_rect"/>
+  <node if="$(eval sensor == 'kinect')" pkg="image_transport" type="republish" name="republish_depth" args="compressed in:=/kinect2/qhd/image_depth_rect raw out:=/kinect2/qhd/image_depth_rect"/>
+  <node if="$(eval sensor == 'kinect')" pkg="image_transport" type="republish" name="republish_color_1" args="compressed in:=/kinect2/qhd/image_color_rect1 raw out:=/kinect2/qhd/image_color_rect1"/>
+  <node if="$(eval sensor == 'kinect')" pkg="image_transport" type="republish" name="republish_depth_1" args="compressed in:=/kinect2/qhd/image_depth_rect1 raw out:=/kinect2/qhd/image_depth_rect1"/> -->
+  
+
+  <arg name="dist" default="0"/>
+  <!-- <arg name="cam" default="/home/lxy/Workspace/mrslam/coxslam_ws/src/CORB-SLAM/corbslam_client/conf/$(arg sensor).yaml"/>
+  <arg name="voc" default="/home/lxy/Workspace/mrslam/coxslam_ws/src/CORB-SLAM/corbslam_client/Vocabulary/ORBvoc.txt"/> -->
+
+  <arg name="cam" default="/home/lxl/catkin_corb/src/CORB-SLAM/corbslam_client/conf/scenenn.yaml"/>
+  <!-- <arg name="cam" default="$(find corbslam_client)/conf/$(arg sensor).yaml"/> -->
+  <arg name="voc" default="$(find corbslam_client)/Vocabulary/ORBvoc.txt"/>
+
+  <arg if="$(eval sensor == 'scenenn')" name="rgb_topic" default="/camera/rgb/image_raw"/>
+  <arg if="$(eval sensor == 'scenenn')" name="depth_topic" default="/camera/depth/image_raw"/>
+
+  <!-- <arg if="$(eval sensor == 'xtion')" name="rgb_topic" default="/camera/rgb/image_rect_color"/>
+  <arg if="$(eval sensor == 'kinect')" name="rgb_topic" default="/kinect2/qhd/image_color_rect"/>
+  <arg if="$(eval sensor == 'firefly')" name="rgb_topic_0" default="/firefly_0/vi_sensor/camera_depth/camera/image_raw"/>
+  <arg if="$(eval sensor == 'firefly')" name="rgb_topic_1" default="/firefly_1/vi_sensor/camera_depth/camera/image_raw"/>
+  <arg if="$(eval sensor == 'xtion')" name="depth_topic" default="/camera/depth_registered/sw_registered/image_rect"/>
+  <arg if="$(eval sensor == 'kinect')" name="depth_topic" default="/kinect2/qhd/image_depth_rect"/>
+  <arg if="$(eval sensor == 'firefly')" name="depth_topic_0" default="/firefly_0/vi_sensor/camera_depth/depth/disparity"/>
+  <arg if="$(eval sensor == 'firefly')" name="depth_topic_1" default="/firefly_1/vi_sensor/camera_depth/depth/disparity"/> -->
+
+  <group ns="corbslam">
+
+    <arg name="debug_client" default="true" />
+    <arg unless="$(arg debug_client)" name="launch_prefix_client" value=" " />
+    <arg if="$(arg debug_client)" name="launch_prefix_client" value="xterm -e gdb -ex run --args" />
+
+    <node pkg="corbslam_client" type="corbslam_client_rgbd_ros" name="corbslamClientNode0" args="$(arg voc) $(arg cam) 0" output="screen" launch-prefix="$(arg launch_prefix_client)">
+      <remap from="camera/rgb/image_raw" to="$(arg rgb_topic)"/>
+      <remap from="camera/depth_registered/image_raw" to="$(arg depth_topic)"/>
+      <remap from="loop_closure_out" to="/coxgraph/loop_closure_in"/>
+      <!-- <remap from="odometry" to="/client0/odometry"/> -->
+    </node>
+
+    <!-- <node pkg="corbslam_client" type="corbslam_client_rgbd_ros" name="corbslamClientNode0" args="$(arg voc) $(arg cam) 0" output="screen" launch-prefix="$(arg launch_prefix_client)">
+      <remap from="camera/rgb/image_raw" to="$(arg rgb_topic_0)"/>
+      <remap from="camera/depth_registered/image_raw" to="$(arg depth_topic_0)"/>
+      <remap from="loop_closure_out" to="/coxgraph/loop_closure_in"/>
+      <remap from="odometry" to="/client0/odometry"/>
+    </node>
+
+    <node pkg="corbslam_client" type="corbslam_client_rgbd_ros" name="corbslamClientNode1" args="$(arg voc) $(arg cam) 1" output="screen" launch-prefix="$(arg launch_prefix_client)">
+      <remap from="camera/rgb/image_raw" to="$(arg rgb_topic_1)"/>
+      <remap from="camera/depth_registered/image_raw" to="$(arg depth_topic_1)"/>
+      <remap from="loop_closure_out" to="/coxgraph/loop_closure_in1"/>
+    </node>
+
+    <arg name="debug_server" default="false" />
+    <arg unless="$(arg debug_server)" name="launch_prefix_server" value=" " />
+    <arg if="$(arg debug_server)" name="launch_prefix_server" value="xterm -e gdb -ex run -args" />
+    <node pkg="corbslam_server" type="corbslam_server_node" name="corbslam_server" args="$(arg voc) $(arg cam)" output="screen" launch-prefix="$(arg launch_prefix_server)">
+      <remap from="map_fusion_out" to="/coxgraph/map_fusion_in"/>
+    </node> -->
+
+    <arg name="debug_server" default="true" />
+    <arg unless="$(arg debug_server)" name="launch_prefix_server" value=" " />
+    <arg if="$(arg debug_server)" name="launch_prefix_server" value="xterm -e gdb -ex run -args" />
+    <node pkg="corbslam_server" type="corbslam_server_node" name="corbslam_server" args="$(arg voc) $(arg cam)" output="screen" launch-prefix="$(arg launch_prefix_server)">
+      <!-- <remap from="map_fusion_out" to="/coxgraph/map_fusion_in"/> -->
+    </node>
+
+  </group>
+
+  <group unless="$(arg use_tf_gt)">
+  <arg if="$(eval sensor == 'scenenn')" name="rosbag_path" default="/home/lxl/Documents/dataset/bagfiles/scenenn_231.bag"/>
+
+  <node if="$(eval sensor == 'scenenn')" name="player" pkg="rosbag" type="play" output="screen" args="-d 5 --clock -r 0.2 -q $(arg rosbag_path) tf:=/tf_old" />
+  <!-- <arg name="rosbag_skip_first_n_sec" default="0" doc="Skip the first n seconds of the rosbag." />
+  <node if="$(eval sensor == 'xtion')" name="player1" pkg="rosbag" type="play" output="screen" args="-d 5 -r 1.0 -s $(arg rosbag_skip_first_n_sec) -q $(arg rosbag_path1) /camera/rgb/image_raw/:=/camera/rgb/image_rect_color1/ /camera/depth_registered/sw_registered/image_rect_raw/:=/camera/depth_registered/sw_registered/image_rect1 tf:=/tf_old" />
+  <node if="$(eval sensor == 'kinect')" name="player1" pkg="rosbag" type="play" output="screen" args="-d 5 -r 1.0 -s $(arg rosbag_skip_first_n_sec) -q $(arg rosbag_path1) /kinect2/qhd/image_color_rect/compressed:=/kinect2/qhd/image_color_rect1/compressed /kinect2/qhd/image_depth_rect/compressed:=/kinect2/qhd/image_depth_rect1/compressed /tf:=/tf_old" /> -->
+  </group>
+
+  <!-- <group if="$(arg play_bag)">
+  <arg if="$(eval sensor == 'xtion')" name="rosbag_path" default="/home/lxy/Datasets/cas_demo/eai-xtion-lab_2020-11-25-10-16-06.bag"/>
+  <arg if="$(eval sensor == 'kinect')" name="rosbag_path" default="/home/lxy/Datasets/eai-kinect-lab-short_2020-09-09-15-23-31.bag"/>
+  <arg if="$(eval sensor == 'xtion')" name="rosbag_path1" default="/home/lxy/Datasets/cas_demo/eai-xtion-lab_2020-11-25-10-38-55.bag"/>
+
+  <node name="player" pkg="rosbag" type="play" output="screen" args="-d 3 -clock -r 1.0 -q $(arg rosbag_path) /camera/depth_registered/sw_registered/image_rect_raw/:=/camera/depth_registered/sw_registered/image_rect/ /camera/rgb/image_raw/:=/camera/rgb/image_rect_color/" />
+  <arg name="rosbag_skip_first_n_sec" default="10" doc="Skip the first n seconds of the rosbag." />
+  <node if="$(eval sensor == 'xtion')" name="player1" pkg="rosbag" type="play" output="screen" args="-d 5 -r 1.0 -s $(arg rosbag_skip_first_n_sec) -q $(arg rosbag_path1) /camera/rgb/image_raw/:=/camera/rgb/image_rect_color1/ /camera/depth_registered/sw_registered/image_rect_raw/:=/camera/depth_registered/sw_registered/image_rect1 tf:=/tf_old" />
+  <node if="$(eval sensor == 'kinect')" name="player1" pkg="rosbag" type="play" output="screen" args="-d 5 -r 1.0 -s $(arg rosbag_skip_first_n_sec) -q $(arg rosbag_path1) /kinect2/qhd/image_color_rect/compressed:=/kinect2/qhd/image_color_rect1/compressed /kinect2/qhd/image_depth_rect/compressed:=/kinect2/qhd/image_depth_rect1/compressed /tf:=/tf_old" />
+  </group> -->
+
+</launch>

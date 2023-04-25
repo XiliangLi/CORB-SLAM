@@ -70,6 +70,10 @@ target_link_libraries(corbslam_client_rgbd_ros
         ${PROJECT_NAME}
         )
 
+message(STATUS "opencv version: $(OpenCV_VERSION)")
+message(STATUS "opencv lib: $(OpenCV_LIBS)")
+message(STATUS "opencv include dir: $(OpenCV_INCLUDE_DIRS)")
+message(STATUS "opencv config path: $(OpenCV_CONFIG_PATH)")
 #add_executable(orbslam_client_node_mono_kitti
 #        Examples/Monocular/mono_kitti.cc)
 #target_link_libraries(orbslam_client_node_mono_kitti ${PROJECT_NAME})

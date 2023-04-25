@@ -47,6 +47,12 @@ namespace ORB_SLAM2 {
         else if (mSensor == RGBD)
             cout << "RGB-D" << endl;
 
+        // Check Voc files
+        // cv::FileStorage fsSettings1(strVocFile.c_str(), cv::FileStorage::READ);
+        // if (!fsSettings1.isOpened()) {
+        //     cerr << "Failed to open strVoc file at: " << strVocFile << endl;
+        //     // exit(-1);
+        // }
         //Check settings file
         cv::FileStorage fsSettings(strSettingsFile.c_str(), cv::FileStorage::READ);
         if (!fsSettings.isOpened()) {
